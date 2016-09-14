@@ -1,0 +1,52 @@
+﻿<article class="post" data-id="@Model.ID" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+    <header>
+        <h1 itemprop="headline name">
+            <a href="@Model.Url" itemprop="url">@Model.Title</a>
+        </h1>
+        <div>
+            <span class="glyphicon glyphicon-bookmark"></span> Posted in:
+            @Categories()
+            <span class="glyphicon glyphicon-calendar"></span> <abbr title="@Model.PubDate.ToLocalTime()" itemprop="datePublished">@Model.PubDate.ToLocalTime().ToLongDateString()</abbr>
+            <span class="glyphicon glyphicon-comment"></span> <a href="@Model.Url#comments" data-disqus-identifier="@Model.ID">Comments</a>
+        </div>
+    </header>
+
+    <div itemprop="articleBody">
+        @Html.Raw(Blog.IsEditing ? Model.Content : Model.GetHtmlContent())
+    </div>
+
+    @if (Blog.CurrentPost != null)
+    {
+        <section id="comments">
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = '@Blog.Theme';
+                var disqus_identifier = '@Blog.CurrentPost.ID';
+                var disqus_title = '@Blog.CurrentPost.Title';
+                var disqus_url = '@string.Concat("http://dodavinkeln.se", Blog.CurrentPost.Url)';
+
+                (function () {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    }
+</article>
+
+@helper Categories()
+{
+if (Model.Categories.Length > 0)
+{
+        <ul class="categories">
+            @foreach (string cat in Model.Categories)
+            {
+                <li itemprop="articleSection">
+                    <a href="~/category/@HttpUtility.UrlEncode(cat.ToLowerInvariant())">@cat</a>
+                </li>
+            }
+        </ul>
+}
+}

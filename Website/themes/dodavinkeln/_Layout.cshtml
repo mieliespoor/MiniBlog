@@ -1,0 +1,119 @@
+﻿@{
+    string next = Blog.GetNextPage();
+    string prev = Blog.GetPrevPage();
+}
+<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <title>@Page.Title</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+    <link rel="edituri" type="application/rsd+xml" title="RSD" href="~/views/robots/rsd" />
+    <link rel="alternate" type="application/rss+xml" title="@Blog.Title" href="~/feed/rss/" />
+    <link rel="alternate" type="application/atom+xml" title="@Blog.Title" href="~/feed/atom/" />
+
+    <link rel="shortcut icon" href="@Blog.FingerPrint("/themes/" + Blog.Theme + "/favicon.ico")" type="image/x-icon" />
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="@Blog.FingerPrint("/themes/" + Blog.Theme + "/site.css")" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nixie+One" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora" />
+    @if (User.Identity.IsAuthenticated)
+    {
+        <link href="@Blog.FingerPrint("/css/admin.css")" rel="stylesheet" />
+    }
+    @if (!string.IsNullOrEmpty(prev))
+    {
+        <link rel="prev" href="@prev" />
+    }
+    @if (!string.IsNullOrEmpty(next))
+    {
+        <link rel="next" href="@next" />
+    }
+</head>
+<body itemscope itemtype="http://schema.org/Blog" class="@(User.Identity.IsAuthenticated ? "admin" : null)">
+    <div class="container">
+        <div class="row">
+            <header role="banner" class="about col-md-3">
+                <a href="~/" itemprop="url"><img src="/themes/@Blog.Theme/johan.jpg" class="img-circle" width="140" alt="" /></a>
+                <h1 class="sr-only">
+                    <a href="~/" itemprop="url">@Blog.Title</a>
+                </h1>
+                <p>
+                    My name is Johan Petersson and I´m working as a developer at <a href="http://www.netrelations.com/">NetRelations</a> in Los Angeles.<br />
+                    I´m very interested in developing user interfaces and server-side stuff.<br />
+                    In my spare time I like to ski downhill, ride my green rocket and dive into the ocean.
+                </p>
+                <p><a href="https://twitter.com/dodavinkeln">twitter.com/dodavinkeln</a></p>
+                <p><a href="https://www.linkedin.com/in/peterssonjohan">linkedin.com/in/peterssonjohan</a></p>
+            </header>
+
+            <div role="main" class="col-md-9">
+                @RenderBody()
+
+                @if (Page.ShowPaging != null)
+                {
+                    <ul class="pager">
+                        @if (Blog.GetPosts().Count() > Blog.PostsPerPage * Blog.CurrentPage)
+                        {
+                            <li class="next"><a href="@Blog.GetPagingUrl(1)" rel="next">Older <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                        }
+                        @if (Blog.CurrentPage > 1)
+                        {
+                            <li class="previous"><a href="@Blog.GetPagingUrl(-1)" rel="prev"><span class="glyphicon glyphicon-chevron-left"></span> Newer</a></li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center" role="contentinfo" itemscope itemtype="http://schema.org/Person" itemprop="author">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <span class="pull-right">
+                <a href="@FormsAuthentication.LoginUrl?ReturnUrl=@Request.RawUrl">Sign in <span class="glyphicon glyphicon-log-in"></span></a>
+            </span>}
+        <span>
+            Copyright &copy; @DateTime.Now.Year <a href="http://dodavinkeln.se" itemprop="url name">Johan Petersson</a>
+        </span>
+    </footer>
+
+    @if (Blog.CurrentPost == null)
+    {
+        <script>
+			var disqus_shortname = '@Blog.Theme';
+
+			(function () {
+				var s = document.createElement('script'); s.async = true;
+				s.type = 'text/javascript';
+				s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+				(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+			}());
+        </script>
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        @RenderPage("~/views/AdminMenu.cshtml")
+    }
+    else
+    {
+        <script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+        <script>
+			(function (i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+					(i[r].q = i[r].q || []).push(arguments)
+				}, i[r].l = 1 * new Date(); a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+			})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+			ga('create', 'UA-11739011-1', 'dodavinkeln.se');
+			ga('send', 'pageview');
+        </script>
+    }
+</body>
+</html>
