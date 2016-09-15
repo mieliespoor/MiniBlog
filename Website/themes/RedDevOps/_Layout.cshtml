@@ -40,13 +40,12 @@
     }
 </head>
 <body itemscope itemtype="http://schema.org/Blog" class="@(User.Identity.IsAuthenticated ? "admin": null)">
-
+    <header role="banner">
+        <span><a href="~/" itemprop="url">@Blog.Title</a></span><br />
+        <em>@Blog.Description</em>
+        <hr />
+    </header>
     <div class="container">
-        <header role="banner">
-            <span><a href="~/" itemprop="url">@Blog.Title</a></span><br />
-            <em>@Blog.Description</em>
-        </header>
-
         <div role="main" class="col-md-8">
             @RenderBody()
 

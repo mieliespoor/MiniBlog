@@ -10,6 +10,24 @@
     }
 }
 
+@media screen and (min-width:768px) {
+    .jumbotron h1, .jumbotron .h1 {
+        font-size: 48px;
+    }
+
+    .container .jumbotron, .container-fluid .jumbotron {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+
+    .jumbotron {
+        padding: 30px 15px;
+        margin-bottom: 30px;
+        color: inherit;
+        background-color: #eee;
+    }
+}
+
 html, body {
     height: 100%;
 }
@@ -18,6 +36,32 @@ body {
     font: 1.8em/1.5 'Century Gothic', Verdana, Geneva, 'DejaVu Sans', sans-serif;
     margin: 0;
 }
+
+    body > header[role="banner"] {
+        border: none;
+        text-align: center;
+        margin: 0 0 3em 0;
+        background-color: #D4002A;
+        color: #fff;
+    }
+
+        body > header[role="banner"] a {
+            font-size: 4em;
+            color: #fff;
+        }
+
+            body > header[role="banner"] a:hover {
+                text-decoration: none;
+            }
+
+        body > header[role="banner"] hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #D4002A;
+            margin: 1em 0;
+            padding: 0;
+        }
 
 img, video, iframe {
     max-width: 100%;
@@ -35,17 +79,6 @@ a {
     min-height: 100%;
     padding-bottom: 35px;
 }
-
-    .container > header {
-        border: none;
-        text-align: center;
-        margin: 0 0 3em 0;
-    }
-
-        .container > header a {
-            font-size: 4em;
-            color: #000;
-        }
 
 div[role=main] {
     margin-bottom: 2em;
@@ -69,6 +102,10 @@ input[type], button, textarea {
 .post header a {
     color: #000;
 }
+
+    .post header a:hover {
+        text-decoration: none;
+    }
 
 .post header div {
     font-size: .75em;
@@ -113,7 +150,7 @@ input[type], button, textarea {
 }
 
 .post div[itemprop='articleBody'] {
-    border-bottom: 1px solid #d3d3d3;
+    border-bottom: 1px solid #D4002A;
     padding-bottom: .5em;
     margin-bottom: 2em;
     -ms-text-size-adjust: 150%;
@@ -246,6 +283,7 @@ footer {
     float: left;
 }
 
+/*#region sidebar widget */
 .widget {
     padding: 23px 0;
     border-bottom: 0px solid #e5e5e5;
@@ -273,3 +311,4 @@ footer {
         margin-right: 5px;
         margin-bottom: 15px;
     }
+/*#endregion */
