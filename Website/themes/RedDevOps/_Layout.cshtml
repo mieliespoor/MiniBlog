@@ -16,6 +16,8 @@
 
     <link rel="stylesheet" href="@Blog.FingerPrint("/Content/bootstrap.css", "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")" />
     <link rel="stylesheet" href="@Blog.FingerPrint("/Content/font-awesome.min.css")" />
+    <link rel="stylesheet" href="@Blog.FingerPrint("/Content/shCore.css")" />
+    <link rel="stylesheet" href="@Blog.FingerPrint("/Content/shThemeDefault.css")" />
     <link rel="stylesheet" href="@Blog.FingerPrint("/themes/" + Blog.Theme + "/site.css")" />
     <link rel="stylesheet" href="@Blog.FingerPrint("/themes/" + Blog.Theme + "/social.css")" />
     <link rel="shortcut icon" href="@Blog.FingerPrint("/favicon.ico")" type="image/x-icon" />
@@ -127,7 +129,10 @@
     {
         @RenderPage("~/views/AdminMenu.cshtml")
     }
-
+    <script src="@Blog.FingerPrint("/scripts/shCore.js")"></script>
+    <script src="@Blog.FingerPrint("/scripts/shBrushCSharp.js")"></script>
+    <script src="@Blog.FingerPrint("/scripts/shBrushCss.js")"></script>
+    <script src="@Blog.FingerPrint("/scripts/shBrushJScript.js")"></script>
 </body>
 </html>
 
